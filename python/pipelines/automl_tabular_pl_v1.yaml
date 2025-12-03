@@ -543,7 +543,7 @@ components:
           defaultValue: ''
           parameterType: STRING
         dataflow_use_public_ips:
-          defaultValue: 'true'
+          defaultValue: 'false'
           parameterType: BOOLEAN
         encryption_spec_key_name:
           defaultValue: ''
@@ -620,7 +620,7 @@ components:
           defaultValue: ''
           parameterType: STRING
         dataflow_use_public_ips:
-          defaultValue: 'true'
+          defaultValue: 'false'
           parameterType: BOOLEAN
         encryption_spec_key_name:
           defaultValue: ''
@@ -3777,7 +3777,7 @@ components:
           defaultValue: ''
           parameterType: STRING
         dataflow_use_public_ips:
-          defaultValue: 'true'
+          defaultValue: 'false'
           parameterType: BOOLEAN
         dataflow_workers_num:
           defaultValue: 1.0
@@ -3829,7 +3829,7 @@ components:
           defaultValue: ''
           parameterType: STRING
         dataflow_use_public_ips:
-          defaultValue: 'true'
+          defaultValue: 'false'
           parameterType: BOOLEAN
         dataflow_workers_num:
           defaultValue: 1.0
@@ -3881,7 +3881,7 @@ components:
           defaultValue: ''
           parameterType: STRING
         dataflow_use_public_ips:
-          defaultValue: 'true'
+          defaultValue: 'false'
           parameterType: BOOLEAN
         dataflow_workers_num:
           defaultValue: 1.0
@@ -4694,7 +4694,7 @@ components:
           defaultValue: ''
           parameterType: STRING
         dataflow_use_public_ips:
-          defaultValue: 'true'
+          defaultValue: 'false'
           parameterType: BOOLEAN
         dataflow_workers_num:
           defaultValue: 1.0
@@ -4765,7 +4765,7 @@ components:
           defaultValue: ''
           parameterType: STRING
         dataflow_use_public_ips:
-          defaultValue: 'true'
+          defaultValue: 'false'
           parameterType: BOOLEAN
         dataflow_workers_num:
           defaultValue: 1.0
@@ -4836,7 +4836,7 @@ components:
           defaultValue: ''
           parameterType: STRING
         dataflow_use_public_ips:
-          defaultValue: 'true'
+          defaultValue: 'false'
           parameterType: BOOLEAN
         dataflow_workers_num:
           defaultValue: 1.0
@@ -5176,7 +5176,7 @@ components:
           defaultValue: ''
           parameterType: STRING
         dataflow_use_public_ips:
-          defaultValue: 'true'
+          defaultValue: 'false'
           parameterType: BOOLEAN
         enable_probabilistic_inference:
           defaultValue: 'false'
@@ -7351,7 +7351,7 @@ root:
         defaultValue: ''
         parameterType: STRING
       dataflow_use_public_ips:
-        defaultValue: 1.0
+        defaultValue: 0.0
         parameterType: BOOLEAN
       disable_early_stopping:
         defaultValue: 0.0

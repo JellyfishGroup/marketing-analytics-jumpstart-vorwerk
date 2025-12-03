@@ -1647,7 +1647,7 @@ resource "null_resource" "create_gemini_model" {
 
     # The destroy command deletes the model.
     destroy_command = <<-EOT
-    ${var.uv_run_alias} bq rm -f --model ${local.gemini_insights_project_id}:${local.config_bigquery.dataset.gemini_insights.name}.gemini_1_5_pro
+    ${var.uv_run_alias} bq rm -f --model ${local.gemini_insights_project_id}:${local.config_bigquery.dataset.gemini_insights.name}.gemini_2_5_flash
     EOT
   }
 
@@ -1685,7 +1685,7 @@ resource "null_resource" "check_gemini_model_exists" {
     command = <<-EOT
     COUNTER=0
     MAX_TRIES=100
-    while ! bq --project_id=${local.gemini_insights_project_id} ls -m --format=pretty ${local.gemini_insights_project_id}:${local.config_bigquery.dataset.gemini_insights.name} | grep -i "gemini_1_5_pro" && [ $COUNTER -lt $MAX_TRIES ]
+    while ! bq --project_id=${local.gemini_insights_project_id} ls -m --format=pretty ${local.gemini_insights_project_id}:${local.config_bigquery.dataset.gemini_insights.name} | grep -i "gemini_2_5_flash" && [ $COUNTER -lt $MAX_TRIES ]
     do
       sleep 5
       printf "."
@@ -1730,58 +1730,58 @@ data "local_file" "user_behaviour_revenue_insights_file" {
 }
 
 # The user_behaviour_revenue_insights procedure is designed to generate gemini insights. 
-resource "google_bigquery_routine" "user_behaviour_revenue_insights" {
-  project         = local.gemini_insights_project_id
-  dataset_id      = local.config_bigquery.dataset.gemini_insights.name
-  routine_id      = "user_behaviour_revenue_insights"
-  routine_type    = "PROCEDURE"
-  language        = "SQL"
-  definition_body = data.local_file.user_behaviour_revenue_insights_file.content
-  description     = "Procedure that generates gemini insights for . Daily granularity level. Run this procedure every day before consuming gemini insights on the Looker Dahboard."
-  arguments {
-    name      = "input_date"
-    mode      = "INOUT"
-    data_type = jsonencode({ "typeKind" : "DATE" })
-  }
-
-  # The lifecycle block is used to configure the lifecycle of the table. In this case, the ignore_changes attribute is set to all, which means that Terraform will ignore 
-  # any changes to the table and will not attempt to update the table. The prevent_destroy attribute is set to true, which means that Terraform will prevent the table from being destroyed.
-  lifecycle {
-    ignore_changes  = all
-    #prevent_destroy = true
-    create_before_destroy = true
-  }
-
-  depends_on = [
-    #module.gemini_insights.google_bigquery_dataset,
-    null_resource.check_gemini_model_exists,
-  ]
-}
-
-
-data "local_file" "invoke_backfill_user_behaviour_revenue_insights_file" {
-  filename = "${local.sql_dir}/query/invoke_backfill_user_behaviour_revenue_insights.sql"
-}
-
-resource "google_bigquery_routine" "invoke_backfill_user_behaviour_revenue_insights" {
-  project         = local.gemini_insights_project_id
-  dataset_id      = local.config_bigquery.dataset.gemini_insights.name
-  routine_id      = "invoke_backfill_user_behaviour_revenue_insights"
-  routine_type    = "PROCEDURE"
-  language        = "SQL"
-  definition_body = data.local_file.invoke_backfill_user_behaviour_revenue_insights_file.content
-  description     = "Procedure that backfills the user_behaviour_revenue_insights table with gemini insights. Daily granularity level. Run this procedure occasionally before consuming gemini insights on the Looker Dahboard."
-
-  # The lifecycle block is used to configure the lifecycle of the table. In this case, the ignore_changes attribute is set to all, which means that Terraform will ignore 
-  # any changes to the table and will not attempt to update the table. The prevent_destroy attribute is set to true, which means that Terraform will prevent the table from being destroyed.
-  lifecycle {
-    ignore_changes  = all
-    #prevent_destroy = true
-    create_before_destroy = true
-  }
-
-  depends_on = [
-    #module.gemini_insights.google_bigquery_dataset,
-    null_resource.check_gemini_model_exists,
-  ]
-}
+#resource "google_bigquery_routine" "user_behaviour_revenue_insights" {
+#  project         = local.gemini_insights_project_id
+#  dataset_id      = local.config_bigquery.dataset.gemini_insights.name
+#  routine_id      = "user_behaviour_revenue_insights"
+#  routine_type    = "PROCEDURE"
+#  language        = "SQL"
+#  definition_body = data.local_file.user_behaviour_revenue_insights_file.content
+#  description     = "Procedure that generates gemini insights for . Daily granularity level. Run this procedure every day before consuming gemini insights on the Looker Dahboard."
+#  arguments {
+#    name      = "input_date"
+#    mode      = "INOUT"
+#    data_type = jsonencode({ "typeKind" : "DATE" })
+#  }
+#
+#  # The lifecycle block is used to configure the lifecycle of the table. In this case, the ignore_changes attribute is set to all, which means that Terraform will ignore 
+#  # any changes to the table and will not attempt to update the table. The prevent_destroy attribute is set to true, which means that Terraform will prevent the table from being destroyed.
+#  lifecycle {
+#    ignore_changes  = all
+#    #prevent_destroy = true
+#    create_before_destroy = true
+#  }
+#
+#  depends_on = [
+#    module.gemini_insights.google_bigquery_dataset,
+#    null_resource.check_gemini_model_exists,
+#  ]
+#}
+#
+#
+#data "local_file" "invoke_backfill_user_behaviour_revenue_insights_file" {
+#  filename = "${local.sql_dir}/query/invoke_backfill_user_behaviour_revenue_insights.sql"
+#}
+#
+#resource "google_bigquery_routine" "invoke_backfill_user_behaviour_revenue_insights" {
+#  project         = local.gemini_insights_project_id
+#  dataset_id      = local.config_bigquery.dataset.gemini_insights.name
+#  routine_id      = "invoke_backfill_user_behaviour_revenue_insights"
+#  routine_type    = "PROCEDURE"
+#  language        = "SQL"
+#  definition_body = data.local_file.invoke_backfill_user_behaviour_revenue_insights_file.content
+#  description     = "Procedure that backfills the user_behaviour_revenue_insights table with gemini insights. Daily granularity level. Run this procedure occasionally before consuming gemini insights on the Looker Dahboard."
+#
+#  # The lifecycle block is used to configure the lifecycle of the table. In this case, the ignore_changes attribute is set to all, which means that Terraform will ignore 
+#  # any changes to the table and will not attempt to update the table. The prevent_destroy attribute is set to true, which means that Terraform will prevent the table from being destroyed.
+#  lifecycle {
+#    ignore_changes  = all
+#    #prevent_destroy = true
+#    create_before_destroy = true
+#  }
+#
+#  depends_on = [
+#    module.gemini_insights.google_bigquery_dataset,
+#    null_resource.check_gemini_model_exists,
+#  ]
+#}

@@ -1,4 +1,4 @@
-# Marketing Analytics Jumpstart Looker Studio Dashboard
+echo "$(terraform -chdir=${TERRAFORM_RUN_DIR} output -raw lookerstudio_create_dashboard_url)"# Marketing Analytics Jumpstart Looker Studio Dashboard
 
 ## Prerequisites
 This Looker Studio dashboard relies on specific BigQuery tables that should be present in your project. These tables are created during the deployment of the Marketing Analytics Jumpstart and by the data processing pipelines of the solution.

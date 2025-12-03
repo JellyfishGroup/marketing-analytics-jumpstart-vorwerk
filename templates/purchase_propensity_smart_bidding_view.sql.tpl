@@ -15,8 +15,7 @@
 SELECT
   p_stat.inference_date,
   p_stat.p_p_decile,
-  p_stat.number_of_users,
-  conf.value*p_stat.number_of_users AS predicted_purchase_value
+  p_stat.number_of_users
 FROM (
   SELECT
     inference_date,
@@ -33,9 +32,3 @@ FROM (
   GROUP BY
     inference_date,
     p_p_decile ) AS p_stat
-JOIN
-  `${project_id}.${activation_dataset}.${smart_bidding_configuration_table}` conf
-ON
-  p_stat.p_p_decile = decile
-WHERE
-  conf.activation_type = 'purchase-propensity'

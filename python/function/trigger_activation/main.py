@@ -65,9 +65,10 @@ def subscribe(cloud_event):
 
   activation_type = message_obj['activation_type']
   source_table = message_obj['source_table']
+  ip_configuration = 'WORKER_IP_PRIVATE'
 
   # Creates a FlexTemplateRuntimeEnvironment object with the service account email.
-  environment_param = dataflow_v1beta3.FlexTemplateRuntimeEnvironment(service_account_email=service_account_email)
+  environment_param = dataflow_v1beta3.FlexTemplateRuntimeEnvironment(service_account_email=service_account_email, ip_configuration=ip_configuration)
 
   # It then creates a dictionary of parameters for the Dataflow Flex Template, including the project ID, activation type, 
   # activation type configuration, source table, temporary location, GA4 measurement ID, GA4 measurement secret, and log dataset.

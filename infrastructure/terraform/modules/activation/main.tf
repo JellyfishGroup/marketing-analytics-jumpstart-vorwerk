@@ -67,6 +67,7 @@ locals {
     "us-central1",
     "us-west2",
     "europe-west1",
+    "europe-west3",
     "asia-east1",
     "australia-southeast1",
     "southamerica-east1"

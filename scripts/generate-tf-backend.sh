@@ -55,7 +55,9 @@ section_open "Creating a new Google Cloud Storage bucket to store the Terraform 
     if gsutil ls -b gs://"${TF_STATE_BUCKET}" >/dev/null 2>&1; then
         printf "The ${TF_STATE_BUCKET} Google Cloud Storage bucket already exists. \n"
     else
-        gsutil mb -p "${TF_STATE_PROJECT}" --pap enforced -l "${LOCATION}" -b on gs://"${TF_STATE_BUCKET}"
+        #gsutil mb -p "${TF_STATE_PROJECT}" --pap enforced -l "${LOCATION}" -b on gs://"${TF_STATE_BUCKET}"
+        gsutil mb -p "${TF_STATE_PROJECT}" --pap enforced -l "${LOCATION}" -b on gs://"${TF_STATE_BUCKET}" -k "projects/sovereigncontrolsid/locations/europe-west3/keyRings/Sovereign-Controls-Key/cryptoKeys/Vorwerk_SC_PROD"
+
         gsutil versioning set on gs://"${TF_STATE_BUCKET}"
     fi
 section_close
